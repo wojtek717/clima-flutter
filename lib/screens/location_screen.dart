@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clima/utilities/constants.dart';
+import 'package:clima/utilities/WeatherData.dart';
 
 class LocationScreen extends StatefulWidget {
   @override
@@ -9,6 +10,9 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   @override
   Widget build(BuildContext context) {
+
+    final WeatherData weatherData = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -62,7 +66,7 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Text(
-                  "It's 🍦 time in San Francisco!",
+                  weatherData.GetCityName(),
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),
