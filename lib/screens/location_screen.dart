@@ -10,7 +10,6 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   @override
   Widget build(BuildContext context) {
-
     final WeatherData weatherData = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
@@ -53,7 +52,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      '32°',
+                      (weatherData.main.temp.toInt() - 273).toString() + '°',
                       style: kTempTextStyle,
                     ),
                     Text(
@@ -66,7 +65,7 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Text(
-                  weatherData.GetCityName(),
+                  weatherData.name,
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),

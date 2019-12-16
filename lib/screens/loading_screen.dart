@@ -29,8 +29,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
     NetworkHelper networkHelper = NetworkHelper(
         'https://api.openweathermap.org/data/2.5/weather?lat=$_lat&lon=$_long&appid=$apiKey');
 
-    var jsonDecodedData = await networkHelper.GetData();
-    WeatherData weatherData = WeatherData(jsonData: jsonDecodedData);
+    Map jsonDecodedData = await networkHelper.GetData();
+    WeatherData weatherData = WeatherData.fromJson(jsonDecodedData);
 
     Navigator.pushNamed(context, '/location', arguments: weatherData);
 
