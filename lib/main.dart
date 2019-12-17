@@ -10,13 +10,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
+//      initialRoute: '/',
+//
+//      routes: {
+//        '/': (context) => LoadingScreen(),
+//        '/location': (context) => LocationScreen(),
+//      },
 
-      routes: {
-        '/': (context) => LoadingScreen(),
-        '/location': (context) => LocationScreen(),
-      },
-
+      home: LoadingScreen(),
       theme: ThemeData.dark(),
     );
   }

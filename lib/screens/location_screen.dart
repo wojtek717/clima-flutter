@@ -4,16 +4,44 @@ import 'package:clima/utilities/WeatherData.dart';
 import 'package:clima/services/weather.dart';
 
 class LocationScreen extends StatefulWidget {
+
+  LocationScreen({this.weatherData});
+
+  final weatherData;
+
   @override
   _LocationScreenState createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+
+  WeatherModel weatherModel = new WeatherModel();
+
+  int temperature;
+  String cityName;
+  String weatherEmoji;
+  String weatherMessage;
+
+  void updateUI(dynamic weatherData) {
+    setState(() {
+      temperature = weatherData.main.temp.toInt() - 273;
+      cityName = weatherData.name;
+      weatherEmoji = weatherModel.getWeatherIcon(weatherData.weather[0].id);
+      weatherMessage = weatherModel.getMessage(temperature);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updateUI(widget.weatherData);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final WeatherData weatherData = ModalRoute.of(context).settings.arguments;
+    //WeatherData weatherData = ModalRoute.of(context).settings.arguments;
 
-    WeatherModel weatherModel = new WeatherModel();
+   // updateUI(weatherData);
 
     return Scaffold(
       body: Container(
@@ -35,7 +63,12 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      var tmp = await weatherModel.getLocationWeather();
+                      updateUI(tmp);
+
+                      print(cityName);
+                    },
                     child: Icon(
                       Icons.near_me,
                       size: 50.0,
@@ -55,11 +88,11 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      (weatherData.main.temp.toInt() - 273).toString() + '°',
+                      (temperature).toString() + '°',
                       style: kTempTextStyle,
                     ),
                     Text(
-                      weatherModel.getWeatherIcon(weatherData.weather[0].id),
+                      weatherEmoji,
                       style: kTempTextStyle,
                     ),
                   ],
@@ -68,9 +101,9 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Text(
-                  weatherModel.getMessage(weatherData.main.temp.toInt() - 273) +
+                  weatherMessage +
                       ' in ' +
-                      weatherData.name,
+                      cityName,
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),

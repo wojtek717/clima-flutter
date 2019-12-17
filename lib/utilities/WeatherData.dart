@@ -161,8 +161,8 @@ class Main {
 }
 
 class Wind {
-  double speed;
-  int deg;
+  var speed;
+  var deg;
 
   Wind({this.speed, this.deg});
 
