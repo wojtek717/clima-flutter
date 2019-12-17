@@ -9,6 +9,17 @@ class WeatherModel {
   double _lat;
   double _long;
 
+  Future<WeatherData> getCityWeather(String cityName) async{
+
+    NetworkHelper networkHelper = NetworkHelper(
+        'https://api.openweathermap.org/data/2.5/weather?q=$cityName&appid=$apiKey');
+
+    Map jsonDecodedData = await networkHelper.GetData();
+    WeatherData weatherData = WeatherData.fromJson(jsonDecodedData);
+
+    return weatherData;
+  }
+
   Future<WeatherData> getLocationWeather() async{
     Location location = Location();
     await location.GetCurrentLocation();
